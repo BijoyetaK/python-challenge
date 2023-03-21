@@ -49,20 +49,14 @@ for budgetrow in budgets:
     #total profit/loss
     netprofit = netprofit + current_pf
 
-    #calculating net changes only if it is having odds rows which are the period end dates. budget_analysis is a list of final calulated fields
+    #calculating net changes by comparing the current record with previous one. budget_analysis is a list of final calulated fields
     #storing the changes of profit/loss in another list change_values and calculating the netprofit
-    if (i > 0) and (i < total_record_cnt - 1) and (i % 2 != 0): 
+    if (i > 0) and (i <= total_record_cnt - 1): 
         open_pf_ls = int(budgets[i-1][1])
         change_in_pf_ls = current_pf - open_pf_ls
         netchange = netchange + change_in_pf_ls
         budget_analysis.append([current_dt,current_month,current_pf,open_pf_ls,change_in_pf_ls])
         change_values.append(change_in_pf_ls)
-    if (i == total_record_cnt -1) and (i % 2 !=0): #for the last record
-        open_pf_ls = int(budgets[i-1][1])
-        change_in_pf_ls = current_pf - open_pf_ls
-        netchange = netchange + change_in_pf_ls
-        budget_analysis.append([current_dt,current_month,current_pf,open_pf_ls,change_in_pf_ls])
-        change_values.append(change_in_pf_ls) 
     i = i +1
 
 change_values.sort() #sorting the list of change values to calculate the greatest increase and decrease
@@ -84,23 +78,16 @@ messages.append('Financial Analysis\n')
 separator = "-" * 50 
 separator = separator + '\n'
 messages.append(separator)
-messages.append('Total Dates: {0}\n'.format(str(total_record_cnt)))
-messages.append('Total unique months: {0}\n'.format(str(len(unique_months))))
+messages.append('Total Months: {0}\n'.format(str(total_record_cnt)))
 messages.append('Total profit/loss : ${0}\n'.format(str(netprofit)))
 messages.append('Total change : ${0}\n'.format(str(netchange)))
 messages.append('Avg change : ${0}\n'.format(str(avg_change)))
 messages.append("Greatest Increase in Profits: {0} (${1})\n" .format(str(date_of_gr_inc),str(gr_inc_change)))
 messages.append("Greatest Decrease in Profits: {0} (${1})\n" .format(str(date_of_gr_dec),str(gr_dec_change)))
 
-#prints to the terminal
-print('Total Dates: {0}'.format(str(total_record_cnt)))
-print('Total unique months: {0}'.format(str(len(unique_months))))
-print('Total profit/loss : ${0}'.format(str(netprofit)))
-print('Total change : ${0}'.format(str(netchange)))
-print('Avg change : ${0}'.format(str(avg_change)))
-print("Greatest Increase in Profits: {0} (${1})" .format(str(date_of_gr_inc),str(gr_inc_change)))
-print("Greatest Decrease in Profits: {0} (${1})" .format(str(date_of_gr_dec),str(gr_dec_change)))
 
 #writing the final output to the text file analysis.txt
 with open(output_filepath, 'w') as outfilehandler:
     outfilehandler.writelines(messages)
+
+print("\n".join(messages))

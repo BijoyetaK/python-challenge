@@ -1,9 +1,8 @@
 Financial Analysis
 --------------------------------------------------
-Total Dates: 86
-Total unique months: 12
+Total Months: 86
 Total profit/loss : $22564198
-Total change : $-7681886
-Avg change : $-178648.51
+Total change : $-706444
+Avg change : $-8311.11
 Greatest Increase in Profits: Aug-16 ($1862002)
 Greatest Decrease in Profits: Feb-14 ($-1825558)
